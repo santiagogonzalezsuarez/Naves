@@ -11,6 +11,7 @@ public class Enemigo implements Cosa {
 	public double angle;
 	public Scene scene;
 	public int timerPrimerDisparo = 240;
+	public int direction;
 	
 	public Enemigo(Scene scene) {
 		this.size = 15;
@@ -18,6 +19,7 @@ public class Enemigo implements Cosa {
 		this.y = 480 * Math.random();
 		this.angle = Math.random() * 360;
 		this.scene = scene;
+		this.direction = (int)(Math.random() * 2);
 	}
 
 	public void Actualizar() {
@@ -29,8 +31,21 @@ public class Enemigo implements Cosa {
 				this.Disparar();
 			}
 		}
+		if (this.direction == 0) {
+			this.GirarIzquierda(2);
+		} else {
+			this.GirarDerecha(2);
+		}
 	}
 	
+	public void GirarIzquierda(double angle) {
+		this.angle -= angle;
+	}
+	
+	public void GirarDerecha(double angle) {
+		this.angle += angle;
+	}
+		
 	public void Disparar() {
 		Bala bala = new Bala(this.x + size * Math.sin(angle * Math.PI / 180), this.y - size * Math.cos(angle * Math.PI / 180), this.angle);
 		scene.cosas.add(bala);
